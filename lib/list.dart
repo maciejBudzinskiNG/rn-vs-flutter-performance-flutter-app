@@ -18,7 +18,7 @@ class Episodes extends StatelessWidget {
 
     return Card(
         child: new Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(6),
             child: new Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
