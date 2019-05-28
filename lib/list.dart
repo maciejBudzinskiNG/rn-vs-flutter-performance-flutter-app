@@ -3,17 +3,38 @@ import 'package:flutter/material.dart';
 String placeholderUrl =
     'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081';
 
-class Episodes extends StatelessWidget {
+class Episodes extends StatefulWidget {
   final List episodes;
-  final AnimationController animationController;
-  Episodes(this.episodes, this.animationController);
+  Episodes(this.episodes);
+
+  @override
+  _EpisodesState createState() => _EpisodesState();
+}
+
+class _EpisodesState extends State<Episodes>
+    with SingleTickerProviderStateMixin {
+  AnimationController animationController;
+
+  @override
+  void initState() {
+    animationController = new AnimationController(
+        vsync: this, duration: Duration(milliseconds: 500));
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 
   Widget _buildItem(BuildContext context, int index) {
-    String name = episodes[index]['name'];
-    String season = episodes[index]["season"].toString();
-    String episode = episodes[index]["number"].toString();
-    String imgUrl = episodes[index]["image"] != null
-        ? episodes[index]["image"]["medium"]
+    String name = widget.episodes[index]['name'];
+    String season = widget.episodes[index]["season"].toString();
+    String episode = widget.episodes[index]["number"].toString();
+    String imgUrl = widget.episodes[index]["image"] != null
+        ? widget.episodes[index]["image"]["medium"]
         : placeholderUrl;
 
     return Card(
@@ -48,8 +69,10 @@ class Episodes extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
+    animationController.repeat();
+
     return ListView.builder(
         itemBuilder: _buildItem,
-        itemCount: episodes == null ? 0 : episodes.length);
+        itemCount: widget.episodes == null ? 0 : widget.episodes.length);
   }
 }
