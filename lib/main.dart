@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import 'dart:async';
 
 import 'package:flutter_app/list.dart';
+import 'package:flutter_app/helpers.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,6 +48,18 @@ class _MyHomePageState extends State<MyHomePage>
     super.initState();
   }
 
+  shuffleCards() {
+    setState(() {
+      data = shuffle(data);
+    });
+  }
+
+  sortCards() {
+    setState(() {
+      data = sort(data);
+    });
+  }
+
   @override
   void dispose() {
     animationController.dispose();
@@ -60,23 +71,28 @@ class _MyHomePageState extends State<MyHomePage>
     animationController.repeat();
 
     return Scaffold(
-        body: Container(
-            child: Center(
-                child: Column(children: <Widget>[
+        body: SafeArea(
+            child: Column(children: <Widget>[
       Expanded(child: Episodes(data, animationController)),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
               child: RaisedButton(
+            onPressed: () {
+              shuffleCards();
+            },
             child: Text('Shuffle'),
           )),
           Expanded(
               child: RaisedButton(
+            onPressed: () {
+              sortCards();
+            },
             child: Text('Sort'),
           )),
         ],
       )
-    ]))));
+    ])));
   }
 }

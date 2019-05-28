@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+String placeholderUrl =
+    'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?v=1530129081';
+
 class Episodes extends StatelessWidget {
   final List episodes;
   final AnimationController animationController;
@@ -9,7 +12,9 @@ class Episodes extends StatelessWidget {
     String name = episodes[index]['name'];
     String season = episodes[index]["season"].toString();
     String episode = episodes[index]["number"].toString();
-    String imgUrl = episodes[index]['image']['medium'];
+    String imgUrl = episodes[index]["image"] != null
+        ? episodes[index]["image"]["medium"]
+        : placeholderUrl;
 
     return Card(
         child: new Padding(
