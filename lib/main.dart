@@ -45,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage>
         vsync: this, duration: Duration(milliseconds: 500));
 
     this.loadJsonData();
+
     super.initState();
   }
 
@@ -59,8 +60,23 @@ class _MyHomePageState extends State<MyHomePage>
     animationController.repeat();
 
     return Scaffold(
-        body: new Container(
-      child: new Center(child: Episodes(data, animationController)),
-    ));
+        body: Container(
+            child: Center(
+                child: Column(children: <Widget>[
+      Expanded(child: Episodes(data, animationController)),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+              child: RaisedButton(
+            child: Text('Shuffle'),
+          )),
+          Expanded(
+              child: RaisedButton(
+            child: Text('Sort'),
+          )),
+        ],
+      )
+    ]))));
   }
 }
